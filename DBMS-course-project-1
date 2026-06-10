@@ -1,0 +1,146 @@
+mysql> create database Bookshelf;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use Bookshelf;
+Database changed
+mysql> create table Books(Title varchar(50), Author varchar(50), Page_Count int(50));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> insert into Books values("500 days of summer", "Scott Neustadter", 152);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Books values("Shiva and the Rise of the Shadows", "Kanika Dhillon", 236);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Books values("Diary of a Wimpy Kid: The Long Haul", "Jeff Kinney", 217);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into Books values("Fangirl", "Rainbow Rowell", 483);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from books;
++-------------------------------------+------------------+------------+
+| Title                               | Author           | Page_Count |
++-------------------------------------+------------------+------------+
+| 500 days of summer                  | Scott Neustadter |        152 |
+| Shiva and the Rise of the Shadows   | Kanika Dhillon   |        236 |
+| Diary of a Wimpy Kid: The Long Haul | Jeff Kinney      |        217 |
+| Fangirl                             | Rainbow Rowell   |        483 |
++-------------------------------------+------------------+------------+
+4 rows in set (0.00 sec)
+mysql> Alter table Books
+    -> add column status varchar(50);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from books;
++-------------------------------------+------------------+------------+--------+
+| Title                               | Author           | Page_Count | status |
++-------------------------------------+------------------+------------+--------+
+| 500 days of summer                  | Scott Neustadter |        152 | NULL   |
+| Shiva and the Rise of the Shadows   | Kanika Dhillon   |        236 | NULL   |
+| Diary of a Wimpy Kid: The Long Haul | Jeff Kinney      |        217 | NULL   |
+| Fangirl                             | Rainbow Rowell   |        483 | NULL   |
++-------------------------------------+------------------+------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> Update books
+    -> set status = "Reading"
+    -> ;
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select * from books;
++-------------------------------------+------------------+------------+---------+
+| Title                               | Author           | Page_Count | status  |
++-------------------------------------+------------------+------------+---------+
+| 500 days of summer                  | Scott Neustadter |        152 | Reading |
+| Shiva and the Rise of the Shadows   | Kanika Dhillon   |        236 | Reading |
+| Diary of a Wimpy Kid: The Long Haul | Jeff Kinney      |        217 | Reading |
+| Fangirl                             | Rainbow Rowell   |        483 | Reading |
++-------------------------------------+------------------+------------+---------+
+4 rows in set (0.00 sec)
+
+mysql> Alter table Books
+    -> add column Genre varchar(50);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from books;
++-------------------------------------+------------------+------------+---------+-------+
+| Title                               | Author           | Page_Count | status  | Genre |
++-------------------------------------+------------------+------------+---------+-------+
+| 500 days of summer                  | Scott Neustadter |        152 | Reading | NULL  |
+| Shiva and the Rise of the Shadows   | Kanika Dhillon   |        236 | Reading | NULL  |
+| Diary of a Wimpy Kid: The Long Haul | Jeff Kinney      |        217 | Reading | NULL  |
+| Fangirl                             | Rainbow Rowell   |        483 | Reading | NULL  |
++-------------------------------------+------------------+------------+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> Update books
+    -> set genre = romance
+    -> where Page_Count = 152;
+ERROR 1054 (42S22): Unknown column 'romance' in 'field list'
+mysql> Update books
+    -> set genre = "romance"
+    -> where Page_Count = 152;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> Update books
+    -> set genre = "Fantasy"
+    -> where Page_Count = 236;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> Update books
+    -> set genre = "Comedy"
+    -> where Page_Count = 217;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> Update books
+    -> set genre = "Coming of age"
+    -> where Page_Count = 483;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from books;
++-------------------------------------+------------------+------------+---------+---------------+
+| Title                               | Author           | Page_Count | status  | Genre         |
++-------------------------------------+------------------+------------+---------+---------------+
+| 500 days of summer                  | Scott Neustadter |        152 | Reading | romance       |
+| Shiva and the Rise of the Shadows   | Kanika Dhillon   |        236 | Reading | Fantasy       |
+| Diary of a Wimpy Kid: The Long Haul | Jeff Kinney      |        217 | Reading | Comedy        |
+| Fangirl                             | Rainbow Rowell   |        483 | Reading | Coming of age |
++-------------------------------------+------------------+------------+---------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from books
+    -> where author = "Kanika Dhillon";
++-----------------------------------+----------------+------------+---------+---------+
+| Title                             | Author         | Page_Count | status  | Genre   |
++-----------------------------------+----------------+------------+---------+---------+
+| Shiva and the Rise of the Shadows | Kanika Dhillon |        236 | Reading | Fantasy |
++-----------------------------------+----------------+------------+---------+---------+
+1 row in set (0.00 sec)
+
+mysql> update books
+    -> set status = "Finished"
+    -> where Page_Count = 236;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> delete from books
+    -> where page_count = 483;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from books;
++-------------------------------------+------------------+------------+----------+---------+
+| Title                               | Author           | Page_Count | status   | Genre   |
++-------------------------------------+------------------+------------+----------+---------+
+| 500 days of summer                  | Scott Neustadter |        152 | Reading  | romance |
+| Shiva and the Rise of the Shadows   | Kanika Dhillon   |        236 | Finished | Fantasy |
+| Diary of a Wimpy Kid: The Long Haul | Jeff Kinney      |        217 | Reading  | Comedy  |
++-------------------------------------+------------------+------------+----------+---------+
+3 rows in set (0.00 sec)
